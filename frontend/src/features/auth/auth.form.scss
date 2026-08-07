@@ -2,7 +2,6 @@ main {
   min-height: 100vh;
   width: 100%;
   background: #fafafa;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +14,6 @@ main {
     padding: 2.5rem;
     border-radius: 24px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
-
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -56,13 +54,10 @@ main {
       border: 1px solid #d1d5db;
       outline: none;
       background: #fff;
-
       padding: 0.95rem 1rem;
       border-radius: 16px;
-
       font-size: 1rem;
       color: #111827;
-
       transition: all 0.25s ease;
 
       &::placeholder {
@@ -96,11 +91,9 @@ main {
 .loading-page {
   min-height: 100vh;
   width: 100%;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   background: #f8fafc;
 
   .loader-container {
@@ -113,7 +106,6 @@ main {
       font-size: 28px;
       font-weight: 700;
       color: #111827;
-
       animation: pulse 1.5s infinite;
 
       span {
@@ -130,11 +122,9 @@ main {
   .spinner {
     width: 55px;
     height: 55px;
-
     border-radius: 50%;
     border: 5px solid #e5e7eb;
     border-top-color: #2563eb;
-
     animation: spin 0.9s linear infinite;
   }
 }
@@ -160,11 +150,9 @@ main {
   0% {
     content: "";
   }
-
   50% {
     opacity: 0.3;
   }
-
   100% {
     opacity: 1;
   }
