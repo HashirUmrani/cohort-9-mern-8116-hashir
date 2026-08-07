@@ -41,7 +41,7 @@ const Login = () => {
     <main>
       <div className="form-container">
         <h1>Welcome Back</h1>
-        <p>Sign in to continue managing your notes.</p>
+        <p>LogIn to continue managing your notes.</p>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">
@@ -54,6 +54,7 @@ const Login = () => {
               id="email"
               name="email"
               placeholder="Enter email address"
+              required
             />
           </div>
           <div className="input-group">
@@ -66,10 +67,13 @@ const Login = () => {
               id="password"
               name="password"
               placeholder="Enter password"
+              required
             />
           </div>
 
-          <button className="button primary-button">Login</button>
+          <button className="button primary-button" disabled={loading}>
+            {loading ? "LoginIn..." : Login}
+          </button>
         </form>
 
         <p>
