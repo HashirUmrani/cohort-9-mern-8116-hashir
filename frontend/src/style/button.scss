@@ -1,6 +1,5 @@
 .button {
   border: none;
-  outline: none;
   padding-inline: 1.5rem;
   padding-block: 0.75rem;
   border-radius: 1rem;
@@ -10,6 +9,11 @@
   &.primary-button {
     background-color: #365cdb;
     color: white;
+  }
+
+  &:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 3px;
   }
 
   &:active {
