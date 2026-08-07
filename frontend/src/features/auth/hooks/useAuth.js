@@ -48,7 +48,6 @@ export const useAuth = () => {
         const data = await getMe();
         setUser(data.user);
       } catch {
-        //user is not authorized
         setUser(null);
       } finally {
         setLoading(false);
