@@ -14,7 +14,7 @@ export async function signUp({ username, email, password }) {
     });
     return response.data;
   } catch (err) {
-    console.log(err);
+    throw new Error(err.response?.data?.message || "Sign up failed");
   }
 }
 
@@ -26,7 +26,7 @@ export async function login({ email, password }) {
     });
     return response.data;
   } catch (err) {
-    console.log(err);
+    throw new Error(err.response?.data?.message || "Login failed");
   }
 }
 
@@ -35,7 +35,7 @@ export async function logout() {
     const response = await api.get("/api/auth/logout");
     return response.data;
   } catch (err) {
-    console.log(err);
+    throw new Error(err.response?.data?.message || "Logout failed");
   }
 }
 
@@ -44,6 +44,6 @@ export async function getMe() {
     const response = await api.get("/api/auth/get-me");
     return response.data;
   } catch (err) {
-    console.log(err);
+    throw new Error(err.response?.data?.message || "Failed to fetch user");
   }
 }
