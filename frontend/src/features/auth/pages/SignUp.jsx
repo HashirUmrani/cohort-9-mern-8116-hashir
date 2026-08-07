@@ -54,6 +54,7 @@ const Register = () => {
               id="username"
               name="username"
               placeholder="Enter a username"
+              required
             />
           </div>
           <div className="input-group">
@@ -66,6 +67,7 @@ const Register = () => {
               id="email"
               name="email"
               placeholder="Enter email address"
+              required
             />
           </div>
           <div className="input-group">
@@ -78,10 +80,13 @@ const Register = () => {
               id="password"
               name="password"
               placeholder="Enter password"
+              required
             />
           </div>
 
-          <button className="button primary-button">SignUp</button>
+          <button className="button primary-button" disabled={loading}>
+            {loading ? "SignUp...." : "SignUP"}
+          </button>
         </form>
 
         <p>
