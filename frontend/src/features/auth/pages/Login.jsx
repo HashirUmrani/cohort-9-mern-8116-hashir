@@ -13,8 +13,12 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin({ email, password });
-    navigate("/");
+    try {
+      await handleLogin({ email, password });
+      navigate("/");
+    } catch (err) {
+      console.error("Login failed", err);
+    }
   };
 
   if (loading) {

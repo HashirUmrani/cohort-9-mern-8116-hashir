@@ -13,8 +13,12 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleSignUp({ username, email, password });
-    navigate("/");
+    try {
+      await handleSignUp({ username, email, password });
+      navigate("/");
+    } catch (err) {
+      console.error("SignUp failed", err);
+    }
   };
 
   if (loading) {
