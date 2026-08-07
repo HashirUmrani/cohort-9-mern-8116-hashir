@@ -10,6 +10,7 @@ const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,7 @@ const Login = () => {
       await handleLogin({ email, password });
       navigate("/");
     } catch (err) {
-      console.error("Login failed", err);
+      setError(err.message);
     }
   };
 
@@ -43,6 +44,7 @@ const Login = () => {
         <h1>Welcome Back</h1>
         <p>LogIn to continue managing your notes.</p>
 
+        {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
@@ -72,7 +74,7 @@ const Login = () => {
           </div>
 
           <button className="button primary-button" disabled={loading}>
-            {loading ? "LoginIn..." : Login}
+            {loading ? "LoginIn..." : "Login"}
           </button>
         </form>
 
