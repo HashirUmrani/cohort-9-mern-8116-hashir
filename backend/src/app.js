@@ -33,8 +33,10 @@ app.use(
 
 // required routes
 const authRouter = require("./routes/auth.routes");
+const noteRouter = require("./routes/note.routes");
 
 // all routes usage
 app.use("/api/auth", authRouter);
+app.use("/api/notes", noteRouter);
 
 module.exports = app;
