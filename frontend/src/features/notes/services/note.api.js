@@ -5,6 +5,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
+// this PR included only this API implementaion 
 export async function getNotes() {
   try {
     const response = await api.get("/api/notes/get-notes");
@@ -14,6 +15,7 @@ export async function getNotes() {
   }
 }
 
+// will be implemented in NOTE EDITOR PR. 
 export async function createNote({ heading, content }) {
   try {
     const response = await api.post("/api/notes/create-note", {
@@ -26,6 +28,7 @@ export async function createNote({ heading, content }) {
   }
 }
 
+// will be implemented in feature/NOTE EDITOR PR. 
 export async function updatedNote({ id, heading, content }) {
   try {
     const response = await api.put(`/api/notes/update-note/${id}`, {
@@ -38,6 +41,7 @@ export async function updatedNote({ id, heading, content }) {
   }
 }
 
+// will be implemented in feature/NOTE EDITOR PR. 
 export async function deleteNote({ id }) {
   try {
     const response = await api.delete(`/api/notes/delete-note/${id}`);
