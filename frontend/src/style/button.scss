@@ -1,22 +1,90 @@
 .button {
-  border: none;
-  padding-inline: 1.5rem;
-  padding-block: 0.75rem;
-  border-radius: 1rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-inline: 1.1rem;
+  padding-block: 0.65rem;
+  border-radius: 5px;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.4;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
 
   &.primary-button {
-    background-color: #365cdb;
-    color: white;
+    background-color: #ffe600;
+    border-color: #ebd300;
+    color: #1a202c;
+    box-shadow: 0 4px 10px rgba(220, 190, 0, 0.2);
+
+    &:hover:not(:disabled) {
+      background-color: #ffd000;
+      border-color: #e0b800;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(220, 190, 0, 0.28);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(220, 190, 0, 0.15);
+    }
+  }
+
+  &.secondary-button {
+    background-color: #ffffff;
+    border-color: #dfe5ee;
+    color: #344054;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background-color: #fffdf0;
+      border-color: #ebded0;
+      color: #172033;
+    }
+  }
+
+  &.danger-button {
+    background-color: #ffffff;
+    border-color: #f2caca;
+    color: #c75b5b;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background-color: #fff5f5;
+      border-color: #e8b4b4;
+      color: #b94343;
+    }
+  }
+
+  &.ghost-button {
+    background-color: transparent;
+    border-color: transparent;
+    color: #667085;
+    font-weight: 600;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(0, 0, 0, 0.04);
+      color: #172033;
+    }
   }
 
   &:focus-visible {
-    outline: 3px solid #93c5fd;
-    outline-offset: 3px;
+    outline: 3px solid rgba(255, 230, 0, 0.35);
+    outline-offset: 2px;
   }
 
-  &:active {
-    transform: scale(1.1);
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: none;
+    transform: none;
   }
 }

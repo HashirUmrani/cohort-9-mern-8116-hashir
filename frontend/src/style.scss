@@ -1,17 +1,22 @@
 @use "./style/button.scss";
 
 * {
-  margin: 0%;
-  padding: 0%;
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-html,
-body,
-#root {
+html {
   width: 100%;
-  background-color: black;
-  color: whitesmoke;
+  min-height: 100%;
+  background: #f7f9fc;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: #f7f9fc;
+  color: #172033;
   font-family:
     system-ui,
     -apple-system,
@@ -24,4 +29,13 @@ body,
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  background: #f7f9fc;
+  color: #172033;
 }

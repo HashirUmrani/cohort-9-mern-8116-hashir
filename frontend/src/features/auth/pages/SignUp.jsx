@@ -9,15 +9,41 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState("");
+
   const { loading, handleSignUp } = useAuth();
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (username.trim().length < 3) {
+      newErrors.username = "Username must be at least 3 characters.";
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+    if (password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters.";
+    }
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setServerError("");
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       await handleSignUp({ username, email, password });
-      navigate("/");
+      navigate("/login");
     } catch (err) {
-      console.error("SignUp failed", err);
+      setServerError(err.message);
     }
   };
 
@@ -43,12 +69,21 @@ const Register = () => {
         <h1>Create Account</h1>
         <p>Join us and start organizing your notes today.</p>
 
+        {serverError && <p className="error-message">{serverError}</p>}
+
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="username">Username</label>
             <input
+              value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
+                if (error.username) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    username: "",
+                  }));
+                }
               }}
               type="text"
               id="username"
@@ -56,12 +91,23 @@ const Register = () => {
               placeholder="Enter a username"
               required
             />
+
+            {errors.username && (
+              <p className="field-error">{errors.username}</p>
+            )}
           </div>
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+                if (errors.email) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    email: "",
+                  }));
+                }
               }}
               type="email"
               id="email"
@@ -69,12 +115,20 @@ const Register = () => {
               placeholder="Enter email address"
               required
             />
+            {errors.email && <p className="field-error">{errors.email}</p>}
           </div>
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
+              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
+                if (errors.password) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    password: "",
+                  }));
+                }
               }}
               type="password"
               id="password"
@@ -82,6 +136,9 @@ const Register = () => {
               placeholder="Enter password"
               required
             />
+            {errors.password && (
+              <p className="field-error">{errors.password}</p>
+            )}
           </div>
 
           <button className="button primary-button" disabled={loading}>

@@ -13,6 +13,13 @@ const noteRouter = Router();
 noteRouter.get("/get-notes", authMiddleware.authUser, noteController.getNotes);
 
 /**
+ * @route GET /api/notes/:id
+ * @description getting a note by id
+ * @acess private
+ */
+noteRouter.get("/:id", authMiddleware.authUser, noteController.getNoteById);
+
+/**
  * @route POST /api/notes/create-note
  * @description creating a note
  * @acess private

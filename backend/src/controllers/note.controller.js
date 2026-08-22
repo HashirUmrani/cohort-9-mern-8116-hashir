@@ -18,6 +18,30 @@ async function getNotes(req, res) {
   }
 }
 
+async function getNoteById(req, res) {
+  try {
+    const note = await Note.findOne({
+      _id: req.params.id,
+      user: req.user.id,
+    });
+    if (!note) {
+      return res.status(404).json({
+        success: false,
+        message: "Note not found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      note,
+    });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: "Failed to get the note",
+    });
+  }
+}
+
 async function createNote(req, res) {
   try {
     const { heading, content } = req.body;
@@ -25,7 +49,7 @@ async function createNote(req, res) {
     if (typeof heading !== "string" || typeof content !== "string") {
       return res
         .status(400)
-        .json({ message: "Handing and content must be valid string" });
+        .json({ message: "Heading and content must be valid string" });
     }
     const note = await Note.create({
       heading,
@@ -39,11 +63,15 @@ async function createNote(req, res) {
     });
   } catch (error) {
     if (error.name === "ValidationError") {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "Failed to create note",
       });
     }
+    return res.status(500).json({
+      success: false,
+      message: "Failed to create note",
+    });
   }
 }
 
@@ -62,8 +90,11 @@ async function updateNote(req, res) {
     }
 
     const updatedNote = await Note.findOneAndUpdate(
-      { _id: id },
-      { heading, content },
+      { _id: id, user: req.user.id },
+      {
+        heading,
+        content,
+      },
       {
         new: true,
         runValidators: true,
@@ -71,14 +102,23 @@ async function updateNote(req, res) {
     );
 
     if (!updatedNote) {
-      return res.status(404).json({ error: "Note not found." });
+      return res.status(404).json({
+        success: false,
+        message: "Note not found.",
+      });
     }
 
-    return res.status(200).json(updatedNote);
+    return res.status(200).json({
+      success: true,
+      note: updatedNote,
+    });
   } catch (error) {
     if (error.name === "ValidationError") {
       return res.status(400).json({ error: error.message });
     }
+    return res
+      .status(500)
+      .json({ success: false, message: "failed to update the note" });
   }
 }
 
@@ -110,6 +150,7 @@ async function deleteNote(req, res) {
 
 module.exports = {
   getNotes,
+  getNoteById,
   createNote,
   updateNote,
   deleteNote,

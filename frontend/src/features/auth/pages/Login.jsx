@@ -14,9 +14,21 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!email.trim()) {
+      setError("Email is required.");
+      return;
+    }
+
+    if (!password.trim()) {
+      setError("Password is required.");
+      return;
+    }
+
     try {
       await handleLogin({ email, password });
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setError(err.message);
     }
@@ -41,16 +53,18 @@ const Login = () => {
   return (
     <main>
       <div className="form-container">
-        <h1>Welcome Back</h1>
-        <p>LogIn to continue managing your notes.</p>
+        <h1>Welcome Note</h1>
+        <p>Login to continue managing your notes.</p>
 
         {error && <p className="error-message">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="email">Email</label>
             <input
+              value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
+                setError("");
               }}
               type="email"
               id="email"
@@ -62,8 +76,10 @@ const Login = () => {
           <div className="input-group">
             <label htmlFor="password">Password</label>
             <input
+              value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
+                setError("");
               }}
               type="password"
               id="password"
@@ -74,7 +90,7 @@ const Login = () => {
           </div>
 
           <button className="button primary-button" disabled={loading}>
-            {loading ? "LoginIn..." : "Login"}
+            {loading ? "Logging..." : "Login"}
           </button>
         </form>
 
