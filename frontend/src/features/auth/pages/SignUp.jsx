@@ -78,7 +78,7 @@ const Register = () => {
               value={username}
               onChange={(e) => {
                 setUsername(e.target.value);
-                if (error.username) {
+                if (errors.username) {
                   setErrors((prev) => ({
                     ...prev,
                     username: "",

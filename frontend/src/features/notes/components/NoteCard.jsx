@@ -32,6 +32,8 @@ const NoteCard = ({ note, onDelete }) => {
 
       if (onDelete) {
         onDelete(note._id);
+      } else {
+        setIsDeleting(false);
       }
     } catch (error) {
       console.error("Unable to delete note:", error);

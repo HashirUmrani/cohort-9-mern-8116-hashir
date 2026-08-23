@@ -59,7 +59,7 @@ export const NotePage = () => {
     if (hour < 18) {
       return "Good Afternoon";
     }
-    return "Good evening";
+    return "Good Evening";
   };
 
   const displayName = user?.username || "there";

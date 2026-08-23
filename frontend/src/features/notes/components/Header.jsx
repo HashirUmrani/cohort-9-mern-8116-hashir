@@ -4,10 +4,11 @@ import { useNavigate } from "react-router";
 import { useEffect, useRef, useState } from "react";
 
 const Header = ({ searchQuery, setSearchQuery }) => {
-  const { user, logout } = useAuth();
+  const { user, handleLogout: authLogout } = useAuth();
   const navigate = useNavigate();
 
   const profileRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
@@ -31,17 +32,33 @@ const Header = ({ searchQuery, setSearchQuery }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isProfileModalOpen) return;
+
+    closeButtonRef.current?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        setIsProfileModalOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isProfileModalOpen]);
+
   const handleLogout = async () => {
     if (isLoggingOut) return;
 
     try {
       setIsLoggingOut(true);
-      await logout();
+      await authLogout();
       setIsProfileOpen(false);
       setIsProfileModalOpen(false);
-      navigate("/", {
-        replace: true,
-      });
+      navigate("/", { replace: true });
     } catch (error) {
       console.error("Logout failed:", error);
       window.location.replace("/");
@@ -81,13 +98,12 @@ const Header = ({ searchQuery, setSearchQuery }) => {
             aria-label="Open profile menu"
           >
             <div className="avatar">{avatarLetter}</div>
-
             <span>{username}</span>
-
             <span className={`profile-arrow ${isProfileOpen ? "is-open" : ""}`}>
               ▾
             </span>
           </button>
+
           {isProfileOpen && (
             <div className="profile-dropdown">
               <div className="profile-dropdown-user">
@@ -100,6 +116,7 @@ const Header = ({ searchQuery, setSearchQuery }) => {
               </div>
 
               <div className="profile-dropdown-divider" />
+
               <button
                 type="button"
                 className="profile-dropdown-item"
@@ -108,6 +125,7 @@ const Header = ({ searchQuery, setSearchQuery }) => {
                 <User size={16} />
                 <span>Profile</span>
               </button>
+
               <button
                 type="button"
                 className="profile-dropdown-item logout-item"
@@ -115,7 +133,6 @@ const Header = ({ searchQuery, setSearchQuery }) => {
                 disabled={isLoggingOut}
               >
                 <LogOut size={16} />
-
                 <span>{isLoggingOut ? "Logging out..." : "Logout"}</span>
               </button>
             </div>
@@ -127,16 +144,19 @@ const Header = ({ searchQuery, setSearchQuery }) => {
         <div className="profile-modal-overlay" onMouseDown={closeProfileModal}>
           <div
             className="profile-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="profile-modal-title"
             onMouseDown={(event) => event.stopPropagation()}
           >
             <div className="profile-modal-header">
               <div>
                 <span className="profile-modal-eyebrow">Account</span>
-
-                <h2>Profile</h2>
+                <h2 id="profile-modal-title">Profile</h2>
               </div>
 
               <button
+                ref={closeButtonRef}
                 type="button"
                 className="profile-modal-close"
                 onClick={closeProfileModal}
@@ -154,6 +174,7 @@ const Header = ({ searchQuery, setSearchQuery }) => {
                 <p>{email}</p>
               </div>
             </div>
+
             <div className="profile-details">
               <div className="profile-detail">
                 <span>Username</span>
@@ -165,6 +186,7 @@ const Header = ({ searchQuery, setSearchQuery }) => {
                 <strong>{email}</strong>
               </div>
             </div>
+
             <div className="profile-modal-actions">
               <button
                 type="button"
@@ -181,7 +203,6 @@ const Header = ({ searchQuery, setSearchQuery }) => {
                 disabled={isLoggingOut}
               >
                 <LogOut size={15} />
-
                 {isLoggingOut ? "Logging out..." : "Logout"}
               </button>
             </div>

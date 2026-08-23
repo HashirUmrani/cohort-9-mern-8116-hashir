@@ -1,6 +1,6 @@
 import NoteCard from "./NoteCard";
 
-const NotesGrid = ({ notes, onDelete }) => {
+const NotesGrid = ({ notes = [], onDelete }) => {
   return (
     <div className="notes-grid">
       {notes.map((note) => (
